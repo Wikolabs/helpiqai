@@ -5,35 +5,18 @@ on:
     branches: [main]
   workflow_dispatch:
 
-
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-
-      - name: Build and push Docker image
-        run: |
-          docker build -t ghcr.io/wikolabs/helpiqai:latest .
-          docker push ghcr.io/wikolabs/helpiqai:latest
-
       - name: Deploy to VM via SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.WIKOLABS_VM_SSH_KEY }}
           VM_HOST: ${{ secrets.WIKOLABS_VM_HOST }}
           VM_USER: ${{ secrets.WIKOLABS_VM_USER }}
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GHCR_USER: ${{ github.actor }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$VM_HOST" >> ~/.ssh/known_hosts 2>/dev/null
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$VM_USER@$VM_HOST"             "echo '$GHCR_TOKEN' | docker login ghcr.io -u '$GHCR_USER' --password-stdin             && docker pull ghcr.io/wikolabs/helpiqai:latest             && (docker stop helpiqai 2>/dev/null; docker rm helpiqai 2>/dev/null; true)             && docker run -d --name helpiqai -p 3008:3000 --restart unless-stopped ghcr.io/wikolabs/helpiqai:latest             && echo 'Deployed helpiqai on port 3008'"
+          ssh -i ~/.ssh/deploy_key             -o StrictHostKeyChecking=no             -o UserKnownHostsFile=/dev/null             -o ServerAliveInterval=30             -o ServerAliveCountMax=30             "$VM_USER@$VM_HOST"             "set -e; if [ -d /opt/helpiqai/.git ]; then cd /opt/helpiqai && git fetch origin main && git reset --hard origin/main; else git clone https://github.com/Wikolabs/helpiqai.git /opt/helpiqai && cd /opt/helpiqai; fi && docker build -t helpiqai:local . && (docker stop helpiqai 2>/dev/null; docker rm helpiqai 2>/dev/null; true) && docker run -d --name helpiqai -p 3008:3000 --restart unless-stopped helpiqai:local && echo 'Deployed helpiqai on port 3008'"
