@@ -7,15 +7,11 @@
           HelpiqAI
         </span>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            href="https://calendly.com/wikolabs"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button"
             className="px-4 py-2 rounded-lg text-white text-sm font-semibold"
-            style={{ background: "#0d9488" }}
-          >
+            style={{ background: "#0d9488" }}>
             📅 Réserver un créneau →
-          </a>
+          </button>
           <a
             href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20HelpiqAI%20avec%20Wikolabs."
             target="_blank"
@@ -40,15 +36,11 @@
           HelpiqAI connecte vos données produits, commandes et politiques pour répondre à chaque client instantanément — 24h/24, 7j/7, sans agent humain.
         </p>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            href="https://calendly.com/wikolabs"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button"
             className="inline-block px-8 py-4 rounded-xl text-white text-lg font-bold shadow-lg"
-            style={{ background: "linear-gradient(135deg, #0d9488, #0891b2)" }}
-          >
+            style={{ background: "linear-gradient(135deg, #0d9488, #0891b2)" }}>
             📅 Réserver un créneau →
-          </a>
+          </button>
           <a
             href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20HelpiqAI%20avec%20Wikolabs."
             target="_blank"
@@ -153,15 +145,11 @@
         </h2>
         <p className="text-teal-100 mb-8">Démo personnalisée en 30 min. Mise en production en 1 semaine.</p>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            href="https://calendly.com/wikolabs"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button"
             className="inline-block px-8 py-4 rounded-xl font-bold text-lg shadow-lg"
-            style={{ background: "white", color: "#0d9488" }}
-          >
+            style={{ background: "white", color: "#0d9488" }}>
             📅 Réserver un créneau →
-          </a>
+          </button>
           <a
             href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20HelpiqAI%20avec%20Wikolabs."
             target="_blank"
