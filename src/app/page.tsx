@@ -1,4 +1,4 @@
-export default function Home() {
+﻿export default function Home() {
   return (
     <main style={{ color: "#134e4a" }}>
       {/* Nav */}
@@ -176,7 +176,14 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center py-6 text-sm text-teal-600">
-        &copy; 2025 HelpiqAI — Un produit Wikolabs
+        <p>&copy; 2025 HelpiqAI &mdash; Un produit Wikolabs</p>
+        <div className="flex flex-wrap justify-center gap-4 mt-2 text-xs text-teal-500">
+          <a href="mailto:team@wikolabs.com" className="hover:text-teal-800 transition-colors">team@wikolabs.com</a>
+          <span>·</span>
+          <a href="tel:+261386626100" className="hover:text-teal-800 transition-colors">+261 38 66 261 00</a>
+          <span>·</span>
+          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="hover:text-teal-800 transition-colors">Prendre RDV</a>
+        </div>
       </footer>
     </main>
   );
