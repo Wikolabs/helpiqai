@@ -1,0 +1,36 @@
+version: "3.9"
+
+# HelpIQ demo — production-ready POC.
+# 2 services orchestrated:
+#   - helpiqai (Next.js frontend on host port 3008)
+#   - helpiqai-backend (FastAPI Python, internal only on 8000)
+# Internal network so the frontend can reach the backend by service name.
+
+services:
+  helpiqai-backend:
+    image: ghcr.io/wikolabs/helpiqai-backend:latest
+    container_name: helpiqai-backend
+    restart: unless-stopped
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    networks:
+      - helpiqai-net
+
+  helpiqai:
+    image: ghcr.io/wikolabs/helpiqai:latest
+    container_name: helpiqai
+    restart: unless-stopped
+    ports:
+      - "3008:3000"
+    environment:
+      BACKEND_URL: "http://helpiqai-backend:8000"
+    depends_on:
+      - helpiqai-backend
+    networks:
+      - helpiqai-net
+
+networks:
+  helpiqai-net:
+    name: helpiqai-net
+    driver: bridge
