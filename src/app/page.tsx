@@ -1,49 +1,141 @@
 "use client";
+import { useState } from "react";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONFIG — Each LP customizes only this block
+// ─────────────────────────────────────────────────────────────────────────────
 const P = {
   name: "HelpIQ",
-  tagLabel: "Support client IA · Resolution instantanee · 24/7",
-  taglines: ["Support 24/7.", "Resolutions instantanees.", "Clients satisfaits."],
-  taglineAccentIdx: 1,
-  desc: "HelpIQ automatise votre support client avec l'IA — repond, escalade et apprend en continu pour offrir une experience 5 etoiles a chaque interaction.",
-  accent: "#34D399", accentDim: "rgba(52,211,153,0.1)", accentBorder: "rgba(52,211,153,0.25)", accentGlow: "rgba(52,211,153,0.12)",
-  waText: "HelpIQ",
-  navLinks: [{ label: "Fonctionnalites", href: "#features" }, { label: "Comment ca marche", href: "#process" }, { label: "Contact", href: "#cta" }],
-  metrics: [{ value: "85%", label: "auto-resolution" }, { value: "-60%", label: "cout support" }, { value: "<2s", label: "temps de reponse" }, { value: "24/7", label: "disponibilite" }],
-  features: [
-    { icon: "chat", title: "IA conversationnelle", desc: "HelpIQ comprend le contexte, l'historique et l'intention de chaque client — repond avec precision en francais et 30 autres langues." },
-    { icon: "route", title: "Escalade intelligente", desc: "Quand l'IA ne peut pas resoudre, elle transfere avec tout le contexte au bon agent humain. Zero friction, zero repetition." },
-    { icon: "brain", title: "Base connaissance auto-apprenante", desc: "HelpIQ enrichit sa base a chaque resolution. Plus il traite de tickets, plus il devient precis et autonome." },
-  ],
-  steps: [
-    { num: "01", title: "Connectez votre helpdesk", desc: "Zendesk, Intercom, Freshdesk, HubSpot — integration en 15 minutes. HelpIQ analyse vos tickets historiques pour s'entrainer." },
-    { num: "02", title: "HelpIQ apprend vos produits", desc: "Documentation, FAQ, tickets resolus — l'IA assimile toute votre connaissance produit et construit sa base de reponses." },
-    { num: "03", title: "Support autonome operationnel", desc: "HelpIQ prend en charge les tickets entrants. Votre equipe se concentre sur les cas complexes a forte valeur." },
-  ],
-  testimonials: [
-    { quote: "On a reduit notre volume de tickets manuels de 80% en 6 semaines. Nos agents sont enfin concentres sur ce qui compte.", author: "Camille P.", role: "VP Support, SaaS B2B" },
-    { quote: "Le CSAT a augmente de 22 points. Les clients ne savent meme pas qu'ils parlent a une IA.", author: "Antoine L.", role: "CEO, E-commerce" },
-  ],
-  ctaTitle: "Support IA operationnel en 48h",
-  ctaDesc: "Integration en 15 minutes. 85% de tickets resolus auto. Aucune carte bancaire.",
-  ctaPrimary: "Reserver un creneau",
-  footerTagline: "Support client IA pour SaaS",
+  waPhone: "261386626100",
+  palette: {
+    mode: "light" as "dark" | "light",
+    bg: "#ECFDF5",
+    bg2: "#D1FAE5",
+    surface: "rgba(0,0,0,0.035)",
+    border: "rgba(0,0,0,0.08)",
+    txt1: "#0A1F15",
+    txt2: "#3C5848",
+    txt3: "#7A9285",
+    accent: "#047857",
+    accentSoft: "rgba(4,120,87,0.10)",
+    accentBorder: "rgba(4,120,87,0.30)",
+    accentGlow: "rgba(4,120,87,0.15)",
+    navBg: "rgba(236,253,245,0.85)",
+  },
+  content: {
+    fr: {
+      langLabel: "FR",
+      tagLabel: "Support client IA · Resolution instantanee · 24/7",
+      taglines: ["Support 24/7.", "Resolutions instantanees.", "Clients satisfaits."],
+      taglineAccentIdx: 1,
+      desc: "HelpIQ automatise votre support client avec l'IA — repond, escalade et apprend en continu pour offrir une experience 5 etoiles a chaque interaction.",
+      navLinks: [
+        { label: "Fonctionnalites", href: "#features" },
+        { label: "Comment ca marche", href: "#process" },
+        { label: "Pourquoi maintenant", href: "#why" },
+        { label: "Contact", href: "#cta" },
+      ],
+      metrics: [
+        { value: "85%", label: "auto-resolution" },
+        { value: "-60%", label: "cout support" },
+        { value: "<2s", label: "temps de reponse" },
+        { value: "24/7", label: "disponibilite" },
+      ],
+      features: [
+        { icon: "💬", title: "IA conversationnelle", desc: "HelpIQ comprend le contexte, l'historique et l'intention de chaque client — repond avec precision en francais et 30 autres langues, sans templates rigides." },
+        { icon: "🚦", title: "Escalade intelligente", desc: "Quand l'IA ne peut pas resoudre, elle transfere avec tout le contexte au bon agent humain. Zero friction, zero repetition pour le client." },
+        { icon: "🧠", title: "Base connaissance auto-apprenante", desc: "HelpIQ enrichit sa base a chaque resolution. Plus il traite de tickets, plus il devient precis et autonome — sans intervention de votre equipe." },
+      ],
+      steps: [
+        { num: "01", title: "Connectez votre helpdesk", desc: "Zendesk, Intercom, Freshdesk, HubSpot — integration en 15 minutes. HelpIQ analyse vos tickets historiques pour s'entrainer sur votre tone of voice et vos produits." },
+        { num: "02", title: "HelpIQ apprend vos produits", desc: "Documentation, FAQ, tickets resolus — l'IA assimile toute votre connaissance produit et construit sa base de reponses en 48h." },
+        { num: "03", title: "Support autonome operationnel", desc: "HelpIQ prend en charge les tickets entrants. Votre equipe se concentre sur les cas complexes a forte valeur, les SLA explosent par le bas." },
+      ],
+      persuasion: {
+        sectionTag: "Pourquoi maintenant",
+        title: "Vos meilleurs agents perdent leur temps a copier-coller.",
+        paragraphs: [
+          { type: "pathos", text: "Mardi 14h32. Votre agent senior ouvre son 11e ticket de la journee. Meme question que les 47 precedentes : 'comment integrer le webhook sur l'evenement payment.completed ?'. Il copie sa reponse type, change deux variables, envoie. Le client repond 3 minutes plus tard : 'merci'. Au meme moment, votre vrai expert produit cherche depuis 20 minutes pourquoi un client enterprise n'arrive plus a generer ses exports — un bug critique qui touche peut-etre 200 comptes. Vos meilleurs cerveaux passent leurs journees sur des questions auxquelles un junior aurait pu repondre — pendant que les vraies urgences attendent en file. Le burnout n'est pas un risque, c'est un planning." },
+          { type: "logos", text: "Zendesk Benchmark sur 4 800 entreprises montre que 67% des tickets B2B sont des questions repetitives resolubles par knowledge base. Forrester chiffre a 6$ le cout median d'un ticket traite par un humain contre 0.50$ pour une resolution IA — un facteur 12. McKinsey predit qu'en 2027, les organisations qui n'auront pas automatise 70% de leur tier 1 support auront un cout par ticket 3x superieur a leurs concurrents et un eNPS support inferieur de 22 points." },
+          { type: "ethos", text: "Wikolabs construit des agents IA en production depuis 2023 pour des scale-ups B2B, family offices et fintechs reglementees. Nous avons brule nos doigts sur les memes problemes que vous : pipelines qui hallucinent, briefs ignores, dashboards desertes. HelpIQ est ce que nous avons construit pour nos propres clients exigeants avant de le proposer au marche." },
+          { type: "solution", text: "Concretement : vous connectez Zendesk, Intercom ou Freshdesk en 15 minutes. HelpIQ ingere votre documentation, vos FAQ et 6 mois de tickets resolus, et construit sa base de connaissance en 48h. Chaque ticket entrant est analyse en <2 secondes : 85% sont resolus directement, 15% escaladent avec le contexte complet vers le bon agent. Vous reduisez le cout support de 60%, le temps de premiere reponse passe sous 2 secondes, et votre equipe humaine se concentre sur les cas qui comptent." },
+        ],
+      },
+      ctaTitle: "Support IA operationnel en 48h",
+      ctaDesc: "Integration en 15 minutes. 85% de tickets resolus auto. Aucune carte bancaire.",
+      ctaPrimary: "Reserver un appel",
+      ctaWhatsApp: "WhatsApp",
+      ctaDemo: "Demander une demo",
+      ctaSoonBadge: "Bientot",
+      footerTagline: "Support client IA pour SaaS",
+    },
+    en: {
+      langLabel: "EN",
+      tagLabel: "AI customer support · Instant resolution · 24/7",
+      taglines: ["24/7 support.", "Instant resolutions.", "Happy customers."],
+      taglineAccentIdx: 1,
+      desc: "HelpIQ automates your customer support with AI — answers, escalates and learns continuously to deliver a 5-star experience on every interaction.",
+      navLinks: [
+        { label: "Features", href: "#features" },
+        { label: "How it works", href: "#process" },
+        { label: "Why now", href: "#why" },
+        { label: "Contact", href: "#cta" },
+      ],
+      metrics: [
+        { value: "85%", label: "auto-resolution" },
+        { value: "-60%", label: "support cost" },
+        { value: "<2s", label: "response time" },
+        { value: "24/7", label: "availability" },
+      ],
+      features: [
+        { icon: "💬", title: "Conversational AI", desc: "HelpIQ understands context, history and intent of every customer — responds with precision in English and 30+ languages, without rigid templates." },
+        { icon: "🚦", title: "Smart escalation", desc: "When the AI can't resolve, it transfers with full context to the right human agent. Zero friction, zero repetition for the customer." },
+        { icon: "🧠", title: "Self-learning knowledge base", desc: "HelpIQ enriches its base on every resolution. The more tickets it handles, the more accurate and autonomous it becomes — with no team input." },
+      ],
+      steps: [
+        { num: "01", title: "Connect your helpdesk", desc: "Zendesk, Intercom, Freshdesk, HubSpot — integration in 15 minutes. HelpIQ analyzes your historical tickets to learn your tone of voice and products." },
+        { num: "02", title: "HelpIQ learns your products", desc: "Documentation, FAQ, resolved tickets — the AI absorbs all your product knowledge and builds its response base in 48h." },
+        { num: "03", title: "Autonomous support live", desc: "HelpIQ handles incoming tickets. Your team focuses on complex high-value cases, SLAs improve dramatically." },
+      ],
+      persuasion: {
+        sectionTag: "Why now",
+        title: "Your best agents waste their day copy-pasting.",
+        paragraphs: [
+          { type: "pathos", text: "Tuesday 2:32pm. Your senior agent opens their 11th ticket of the day. Same question as the previous 47: 'how do I integrate the webhook on the payment.completed event?'. They copy their template reply, change two variables, send. The customer replies 3 minutes later: 'thanks'. At the same moment, your real product expert has been hunting for 20 minutes why an enterprise customer can't generate their exports — a critical bug possibly affecting 200 accounts. Your best brains spend their days on questions a junior could answer — while real emergencies queue up. Burnout isn't a risk, it's a schedule." },
+          { type: "logos", text: "Zendesk Benchmark on 4,800 companies shows 67% of B2B tickets are repetitive questions solvable by knowledge base. Forrester puts the median cost of a human-handled ticket at $6 vs $0.50 for AI resolution — a 12x factor. McKinsey predicts that by 2027, organizations that haven't automated 70% of tier-1 support will have a per-ticket cost 3x higher than competitors and a support eNPS 22 points lower." },
+          { type: "ethos", text: "Wikolabs has been building production AI agents since 2023 for B2B scale-ups, family offices and regulated fintechs. We burned our fingers on the same problems you face: hallucinating pipelines, ignored briefs, abandoned dashboards. HelpIQ is what we built for our own demanding customers before bringing it to market." },
+          { type: "solution", text: "Concretely: you connect Zendesk, Intercom or Freshdesk in 15 minutes. HelpIQ ingests your documentation, FAQ and 6 months of resolved tickets, and builds its knowledge base in 48h. Every incoming ticket is analyzed in <2 seconds: 85% are resolved directly, 15% escalate with full context to the right agent. You cut support cost by 60%, first response time drops below 2 seconds, and your human team focuses on cases that matter." },
+        ],
+      },
+      ctaTitle: "AI support live in 48h",
+      ctaDesc: "15-minute integration. 85% auto-resolved tickets. No credit card.",
+      ctaPrimary: "Book a call",
+      ctaWhatsApp: "WhatsApp",
+      ctaDemo: "Request a demo",
+      ctaSoonBadge: "Soon",
+      footerTagline: "AI customer support for SaaS",
+    },
+  },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPONENT — identical for all LPs
+// ─────────────────────────────────────────────────────────────────────────────
 export default function Page() {
-  const bg = "#04080F";
-  const bg2 = "#070D1B";
-  const card = "rgba(255,255,255,0.04)";
-  const border = "rgba(255,255,255,0.09)";
-  const gold = "#D4AF37";
-  const goldDim = "rgba(212,175,55,0.1)";
-  const goldBorder = "rgba(212,175,55,0.28)";
-  const txt1 = "#F0EDE6";
-  const txt2 = "#8B9DB5";
-  const txt3 = "#3C5068";
-  const { accent, accentDim, accentBorder, accentGlow } = P;
+  const [lang, setLang] = useState<"fr" | "en">("fr");
+  const t = P.content[lang];
+  const pal = P.palette;
+  const isDark = pal.mode === "dark";
+  const cardOverlayHover = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+
+  const waLink = `https://wa.me/${P.waPhone}?text=${encodeURIComponent(
+    lang === "fr"
+      ? `Bonjour, je souhaite discuter de ${P.name} avec Wikolabs.`
+      : `Hello, I'd like to discuss ${P.name} with Wikolabs.`
+  )}`;
 
   return (
-    <div style={{ minHeight: "100vh", background: bg, color: txt1 }}>
+    <div style={{ minHeight: "100vh", background: pal.bg, color: pal.txt1 }}>
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -51,104 +143,103 @@ export default function Page() {
         @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
         @keyframes pulseDot { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(1.6); } }
         .wk-card { transition: background .3s, border-color .3s, transform .35s cubic-bezier(.34,1.2,.64,1); }
-        .wk-card:hover { background: rgba(255,255,255,0.07) !important; border-color: ${accentBorder} !important; transform: translateY(-6px) !important; }
+        .wk-card:hover { background: ${cardOverlayHover} !important; border-color: ${pal.accentBorder} !important; transform: translateY(-6px); }
         .wk-btn { transition: opacity .2s, transform .2s, box-shadow .2s; }
-        .wk-btn:hover { opacity:.9; transform:translateY(-2px); box-shadow:0 12px 32px rgba(212,175,55,.18); }
-        .wk-wa { transition: opacity .2s, transform .2s; }
-        .wk-wa:hover { opacity:.9; transform:translateY(-2px); }
-        .wk-nav-link { color: #8B9DB5; text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
-        .wk-nav-link:hover { color: #F0EDE6; }
-        @media(max-width:640px){ .wk-hide-sm{ display:none!important; } .wk-hero-title{ font-size:2.4rem!important; } }
+        .wk-btn:hover { opacity:.92; transform:translateY(-2px); box-shadow:0 12px 32px ${pal.accentGlow}; }
+        .wk-btn-wa { transition: opacity .2s, transform .2s; }
+        .wk-btn-wa:hover { opacity:.92; transform:translateY(-2px); }
+        .wk-btn-demo { cursor: not-allowed; opacity:.55; }
+        .wk-btn-demo:hover { transform:none; box-shadow:none; }
+        .wk-nav-link { color:${pal.txt2}; text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
+        .wk-nav-link:hover { color:${pal.txt1}; }
+        .wk-lang { display:inline-flex; border:1px solid ${pal.border}; border-radius:100px; padding:2px; background:${pal.surface}; }
+        .wk-lang button { background:transparent; border:none; padding:4px 12px; font-size:11px; font-weight:700; letter-spacing:.5px; cursor:pointer; border-radius:100px; color:${pal.txt2}; transition: background .2s, color .2s; font-family:inherit; }
+        .wk-lang button.active { background:${pal.accent}; color:${isDark ? "#04080F" : "#FFFFFF"}; }
+        @media(max-width:768px){
+          .wk-hide-sm{ display:none!important; }
+          .wk-hero-title{ font-size:2.4rem!important; }
+          .wk-section{ padding-left:20px!important; padding-right:20px!important; }
+          .wk-cards-grid{ grid-template-columns: 1fr !important; max-width:380px; margin-left:auto; margin-right:auto; }
+          .wk-metrics-row{ justify-content:center; }
+          .wk-cta-row{ flex-direction:column; align-items:stretch; max-width:340px; margin-left:auto; margin-right:auto; }
+          .wk-cta-row > *{ width:100%; justify-content:center; }
+          .wk-persuasion{ padding:60px 20px!important; }
+          .wk-foot{ flex-direction:column; gap:12px; text-align:center; }
+        }
       `}</style>
 
       {/* NAVBAR */}
-      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(4,8,15,0.82)", backdropFilter:"blur(20px)", borderBottom:`1px solid ${border}`, padding:"0 40px", height:60, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <span style={{ fontSize:18, fontWeight:800, letterSpacing:"-0.5px", color:txt1 }}>
-          {P.name}<span style={{ color:gold }}>.</span>
+      <nav className="wk-section" style={{ position:"sticky", top:0, zIndex:100, background:pal.navBg, backdropFilter:"blur(20px)", borderBottom:`1px solid ${pal.border}`, padding:"0 40px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <span style={{ fontSize:18, fontWeight:800, letterSpacing:"-0.5px", color:pal.txt1 }}>
+          {P.name}<span style={{ color:pal.accent }}>.</span>
         </span>
-        <div style={{ display:"flex", gap:28, alignItems:"center" }}>
-          <div className="wk-hide-sm" style={{ display:"flex", gap:24 }}>
-            {P.navLinks.map(l => <a key={l.label} href={l.href} className="wk-nav-link">{l.label}</a>)}
+        <div style={{ display:"flex", gap:24, alignItems:"center" }}>
+          <div className="wk-hide-sm" style={{ display:"flex", gap:22 }}>
+            {t.navLinks.map(l => <a key={l.label} href={l.href} className="wk-nav-link">{l.label}</a>)}
+          </div>
+          <div className="wk-lang" role="group" aria-label="language">
+            <button type="button" className={lang==="fr"?"active":""} onClick={()=>setLang("fr")}>FR</button>
+            <button type="button" className={lang==="en"?"active":""} onClick={()=>setLang("en")}>EN</button>
           </div>
           <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
-            style={{ background:gold, color:"#04080F", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, fontSize:13.5, cursor:"pointer", fontFamily:"inherit" }}>
-            Reserver →
+            style={{ background:pal.accent, color:isDark?"#04080F":"#FFFFFF", border:"none", borderRadius:8, padding:"9px 18px", fontWeight:700, fontSize:13.5, cursor:"pointer", fontFamily:"inherit" }}>
+            {t.ctaPrimary} →
           </button>
         </div>
       </nav>
 
       {/* HERO */}
-      <section style={{ padding:"100px 40px 80px", maxWidth:1000, margin:"0 auto", textAlign:"center", position:"relative" }}>
-        <div style={{ position:"absolute", top:-60, left:"50%", transform:"translateX(-50%)", width:700, height:600, background:`radial-gradient(ellipse at 50% 30%, ${accentGlow} 0%, transparent 60%)`, pointerEvents:"none" }} />
-        <div style={{ display:"inline-flex", alignItems:"center", gap:8, marginBottom:24, background:accentDim, border:`1px solid ${accentBorder}`, borderRadius:100, padding:"6px 18px", animation:"fadeUp .5s ease both" }}>
-          <span style={{ width:7, height:7, borderRadius:"50%", background:accent, display:"inline-block", animation:"pulseDot 2s ease-in-out infinite" }} />
-          <span style={{ color:accent, fontSize:11.5, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase" }}>{P.tagLabel}</span>
+      <section className="wk-section" style={{ padding:"100px 40px 80px", maxWidth:1040, margin:"0 auto", textAlign:"center", position:"relative" }}>
+        <div style={{ position:"absolute", top:-60, left:"50%", transform:"translateX(-50%)", width:720, height:600, background:`radial-gradient(ellipse at 50% 30%, ${pal.accentGlow} 0%, transparent 60%)`, pointerEvents:"none" }} />
+        <div style={{ display:"inline-flex", alignItems:"center", gap:8, marginBottom:24, background:pal.accentSoft, border:`1px solid ${pal.accentBorder}`, borderRadius:100, padding:"6px 18px", animation:"fadeUp .5s ease both" }}>
+          <span style={{ width:7, height:7, borderRadius:"50%", background:pal.accent, display:"inline-block", animation:"pulseDot 2s ease-in-out infinite" }} />
+          <span style={{ color:pal.accent, fontSize:11.5, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase" }}>{t.tagLabel}</span>
         </div>
         <h1 className="wk-hero-title" style={{ fontSize:"clamp(2.6rem,6vw,5rem)", fontWeight:700, lineHeight:1.08, letterSpacing:"-0.03em", marginBottom:28, fontFamily:"'Instrument Serif',Georgia,serif", animation:"fadeUp .5s .08s ease both" }}>
-          {P.taglines.map((line, i) => (
-            <span key={i} style={{ display:"block", color:i===P.taglineAccentIdx?accent:txt1, fontStyle:i===P.taglineAccentIdx?"italic":"normal" }}>{line}</span>
+          {t.taglines.map((line, i) => (
+            <span key={i} style={{ display:"block", color:i===t.taglineAccentIdx?pal.accent:pal.txt1, fontStyle:i===t.taglineAccentIdx?"italic":"normal" }}>{line}</span>
           ))}
         </h1>
-        <p style={{ fontSize:"1.1rem", color:txt2, lineHeight:1.72, maxWidth:580, margin:"0 auto 48px", animation:"fadeUp .5s .16s ease both" }}>{P.desc}</p>
-        <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:14, marginBottom:44, animation:"fadeUp .5s .24s ease both" }}>
-          {P.metrics.map(m => (
-            <div key={m.label} style={{ background:card, border:`1px solid ${border}`, borderRadius:18, padding:"14px 22px", textAlign:"center", minWidth:118 }}>
-              <div style={{ fontSize:"1.7rem", fontWeight:800, color:txt1, letterSpacing:"-1.5px", lineHeight:1 }}>{m.value}</div>
-              <div style={{ fontSize:"0.62rem", color:txt3, textTransform:"uppercase", letterSpacing:"1.5px", marginTop:5 }}>{m.label}</div>
+        <p style={{ fontSize:"1.1rem", color:pal.txt2, lineHeight:1.72, maxWidth:600, margin:"0 auto 44px", animation:"fadeUp .5s .16s ease both" }}>{t.desc}</p>
+        <div className="wk-metrics-row" style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:14, marginBottom:44, animation:"fadeUp .5s .24s ease both" }}>
+          {t.metrics.map(m => (
+            <div key={m.label} style={{ background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:18, padding:"14px 22px", textAlign:"center", minWidth:118 }}>
+              <div style={{ fontSize:"1.7rem", fontWeight:800, color:pal.txt1, letterSpacing:"-1.5px", lineHeight:1 }}>{m.value}</div>
+              <div style={{ fontSize:"0.62rem", color:pal.txt3, textTransform:"uppercase", letterSpacing:"1.5px", marginTop:5 }}>{m.label}</div>
             </div>
           ))}
         </div>
-        <div style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center", animation:"fadeUp .5s .32s ease both" }}>
-          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
-            style={{ background:gold, color:"#04080F", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
-            📅 {P.ctaPrimary}
-          </button>
-          <a href={`https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20${encodeURIComponent(P.waText)}%20avec%20Wikolabs.`}
-            target="_blank" rel="noopener noreferrer" className="wk-wa"
-            style={{ background:"#25d366", color:"#fff", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
-            💬 WhatsApp
-          </a>
-        </div>
+        <CtaRow t={t} pal={pal} isDark={isDark} waLink={waLink} />
       </section>
 
       {/* FEATURES */}
-      <section id="features" style={{ padding:"80px 40px", maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:52 }}>
-          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Fonctionnalites</p>
-          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif", lineHeight:1.15 }}>
-            Tout automatise, <em style={{ fontStyle:"italic", color:gold }}>rien a gerer</em>
-          </h2>
-        </div>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 }}>
-          {P.features.map((f, i) => (
-            <div key={f.title} className="wk-card" style={{ background:card, border:`1px solid ${border}`, borderRadius:20, padding:"28px 28px 24px", position:"relative", overflow:"hidden" }}>
-              <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${i===0?gold:accent},transparent)`, opacity:.6 }} />
-              <div style={{ fontSize:"2rem", marginBottom:16 }}>{i===0?"🔍":i===1?"🧠":"⚡"}</div>
-              <h3 style={{ fontSize:"1.05rem", fontWeight:700, color:txt1, marginBottom:10 }}>{f.title}</h3>
-              <p style={{ fontSize:"0.88rem", color:txt2, lineHeight:1.7, margin:0 }}>{f.desc}</p>
+      <section id="features" className="wk-section" style={{ padding:"80px 40px", maxWidth:1100, margin:"0 auto" }}>
+        <SectionHead pal={pal} tag={lang==="fr"?"Fonctionnalites":"Features"} title={lang==="fr"?"Tout automatise, <em>rien a gerer</em>":"Fully automated, <em>nothing to manage</em>"} />
+        <div className="wk-cards-grid" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 }}>
+          {t.features.map((f, i) => (
+            <div key={f.title} className="wk-card" style={{ background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:20, padding:"28px 28px 26px", position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${pal.accent},transparent)`, opacity:.55 }} />
+              <div style={{ fontSize:"2rem", marginBottom:16 }}>{f.icon}</div>
+              <h3 style={{ fontSize:"1.05rem", fontWeight:700, color:pal.txt1, marginBottom:10 }}>{f.title}</h3>
+              <p style={{ fontSize:"0.88rem", color:pal.txt2, lineHeight:1.7, margin:0 }}>{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="process" style={{ padding:"80px 40px", background:bg2 }}>
+      <section id="process" className="wk-section" style={{ padding:"80px 40px", background:pal.bg2 }}>
         <div style={{ maxWidth:860, margin:"0 auto" }}>
-          <div style={{ textAlign:"center", marginBottom:48 }}>
-            <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Comment ca marche</p>
-            <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>
-              En place en <em style={{ fontStyle:"italic", color:accent }}>10 minutes</em>
-            </h2>
-          </div>
+          <SectionHead pal={pal} tag={lang==="fr"?"Comment ca marche":"How it works"} title={lang==="fr"?"En place en <em>10 minutes</em>":"Live in <em>10 minutes</em>"} />
           <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-            {P.steps.map((s, i) => (
-              <div key={s.num} style={{ display:"flex", alignItems:"flex-start", gap:22, background:card, border:`1px solid ${border}`, borderRadius:18, padding:"22px 26px" }}>
-                <div style={{ flexShrink:0, width:46, height:46, background:i===0?goldDim:accentDim, border:`1px solid ${i===0?goldBorder:accentBorder}`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", color:i===0?gold:accent, fontWeight:800, fontSize:15 }}>
+            {t.steps.map((s, i) => (
+              <div key={s.num} style={{ display:"flex", alignItems:"flex-start", gap:22, background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:18, padding:"22px 26px" }}>
+                <div style={{ flexShrink:0, width:46, height:46, background:pal.accentSoft, border:`1px solid ${pal.accentBorder}`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", color:pal.accent, fontWeight:800, fontSize:15 }}>
                   {s.num}
                 </div>
                 <div>
-                  <h3 style={{ fontSize:"1rem", fontWeight:700, color:txt1, marginBottom:6, lineHeight:1.3 }}>{s.title}</h3>
-                  <p style={{ fontSize:"0.87rem", color:txt2, lineHeight:1.7, margin:0 }}>{s.desc}</p>
+                  <h3 style={{ fontSize:"1rem", fontWeight:700, color:pal.txt1, marginBottom:6, lineHeight:1.3 }}>{s.title}</h3>
+                  <p style={{ fontSize:"0.87rem", color:pal.txt2, lineHeight:1.7, margin:0 }}>{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -156,63 +247,86 @@ export default function Page() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section style={{ padding:"80px 40px", maxWidth:900, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:44 }}>
-          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Temoignages</p>
-          <h2 style={{ fontSize:"clamp(1.6rem,3vw,2.4rem)", fontWeight:700, color:txt1, fontFamily:"'Instrument Serif',Georgia,serif" }}>Ce qu'en disent nos clients</h2>
-        </div>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:20 }}>
-          {P.testimonials.map((t, i) => (
-            <div key={i} style={{ background:card, border:`1px solid ${border}`, borderLeft:`3px solid ${i===0?gold:accent}`, borderRadius:20, padding:"26px 26px 22px" }}>
-              <p style={{ fontSize:"0.92rem", color:txt2, lineHeight:1.75, fontStyle:"italic", marginBottom:20 }}>&ldquo;{t.quote}&rdquo;</p>
-              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ width:38, height:38, borderRadius:"50%", background:i===0?goldDim:accentDim, border:`1px solid ${i===0?goldBorder:accentBorder}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>👤</div>
-                <div>
-                  <div style={{ fontSize:"0.9rem", fontWeight:700, color:txt1 }}>{t.author}</div>
-                  <div style={{ fontSize:"0.72rem", color:txt3 }}>{t.role}</div>
-                </div>
+      {/* PERSUASION — pathos / logos / ethos / solution */}
+      <section id="why" className="wk-persuasion wk-section" style={{ padding:"100px 40px", maxWidth:860, margin:"0 auto" }}>
+        <SectionHead pal={pal} tag={t.persuasion.sectionTag} title={t.persuasion.title} />
+        <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
+          {t.persuasion.paragraphs.map((p, i) => {
+            const labelMap: Record<string, { fr: string; en: string }> = {
+              pathos:   { fr: "L'enjeu humain",  en: "What's at stake" },
+              logos:    { fr: "Les faits",       en: "The facts" },
+              ethos:    { fr: "Notre legitimite", en: "Our credibility" },
+              solution: { fr: "Notre reponse",   en: "Our answer" },
+            };
+            const label = labelMap[p.type]?.[lang] ?? "";
+            return (
+              <div key={i} style={{ borderLeft:`2px solid ${pal.accentBorder}`, paddingLeft:22 }}>
+                <div style={{ fontSize:"0.62rem", fontWeight:700, letterSpacing:"2.5px", textTransform:"uppercase", color:pal.accent, marginBottom:10 }}>{label}</div>
+                <p style={{ fontSize:"1.02rem", color:pal.txt2, lineHeight:1.85, margin:0 }}>{p.text}</p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       {/* CTA */}
-      <section id="cta" style={{ padding:"0 40px 100px", maxWidth:860, margin:"0 auto" }}>
-        <div style={{ background:card, border:`1px solid ${goldBorder}`, borderRadius:24, padding:"64px 48px", textAlign:"center", backgroundImage:`radial-gradient(ellipse at 50% 0%, ${goldDim} 0%, transparent 65%)` }}>
-          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:16 }}>Demarrer</p>
-          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, marginBottom:14, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>{P.ctaTitle}</h2>
-          <p style={{ color:txt2, fontSize:"1rem", marginBottom:36, lineHeight:1.7 }}>{P.ctaDesc}</p>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center" }}>
-            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
-              style={{ background:gold, color:"#04080F", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
-              📅 {P.ctaPrimary}
-            </button>
-            <a href={`https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20${encodeURIComponent(P.waText)}%20avec%20Wikolabs.`}
-              target="_blank" rel="noopener noreferrer" className="wk-wa"
-              style={{ background:"#25d366", color:"#fff", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
-              💬 WhatsApp
-            </a>
-          </div>
+      <section id="cta" className="wk-section" style={{ padding:"0 40px 100px", maxWidth:860, margin:"0 auto" }}>
+        <div style={{ background:pal.surface, border:`1px solid ${pal.accentBorder}`, borderRadius:24, padding:"64px 48px", textAlign:"center", backgroundImage:`radial-gradient(ellipse at 50% 0%, ${pal.accentSoft} 0%, transparent 65%)` }}>
+          <p style={{ fontSize:"0.68rem", color:pal.accent, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:16 }}>{lang==="fr"?"Demarrer":"Get started"}</p>
+          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:pal.txt1, marginBottom:14, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>{t.ctaTitle}</h2>
+          <p style={{ color:pal.txt2, fontSize:"1rem", marginBottom:36, lineHeight:1.7, maxWidth:540, margin:"0 auto 36px" }}>{t.ctaDesc}</p>
+          <CtaRow t={t} pal={pal} isDark={isDark} waLink={waLink} />
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer style={{ borderTop:`1px solid ${border}`, padding:"32px 40px" }}>
-        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:16 }}>
+      <footer className="wk-section" style={{ borderTop:`1px solid ${pal.border}`, padding:"32px 40px" }}>
+        <div className="wk-foot" style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:16 }}>
           <div>
-            <span style={{ fontWeight:800, fontSize:16, color:txt1 }}>{P.name}</span><span style={{ color:gold }}>.</span>
-            <span style={{ display:"block", fontSize:12, color:txt3, marginTop:3 }}>{P.footerTagline}</span>
+            <span style={{ fontWeight:800, fontSize:16, color:pal.txt1 }}>{P.name}</span><span style={{ color:pal.accent }}>.</span>
+            <span style={{ display:"block", fontSize:12, color:pal.txt3, marginTop:3 }}>{t.footerTagline}</span>
           </div>
-          <p style={{ fontSize:13, color:txt3 }}>© 2026 {P.name} — Un produit <a href="https://wikolabs.com" style={{ color:txt2, textDecoration:"none" }}>Wikolabs</a></p>
+          <p style={{ fontSize:13, color:pal.txt3, margin:0 }}>© 2026 {P.name} — {lang==="fr"?"Un produit":"A product by"} <a href="https://wikolabs.com" style={{ color:pal.txt2, textDecoration:"none" }}>Wikolabs</a></p>
           <div style={{ display:"flex", flexWrap:"wrap", gap:16, fontSize:13, alignItems:"center" }}>
-            <a href="mailto:team@wikolabs.com" style={{ color:txt3, textDecoration:"none" }}>team@wikolabs.com</a>
-            <span style={{ color:txt3 }}>·</span>
-            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' style={{ background:"none", border:"none", color:txt3, fontSize:13, cursor:"pointer", fontFamily:"inherit", padding:0 }}>Prendre RDV</button>
+            <a href="mailto:team@wikolabs.com" style={{ color:pal.txt3, textDecoration:"none" }}>team@wikolabs.com</a>
+            <span style={{ color:pal.txt3 }}>·</span>
+            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' style={{ background:"none", border:"none", color:pal.txt3, fontSize:13, cursor:"pointer", fontFamily:"inherit", padding:0 }}>{t.ctaPrimary}</button>
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+function SectionHead({ pal, tag, title }: { pal: typeof P.palette; tag: string; title: string }) {
+  return (
+    <div style={{ textAlign:"center", marginBottom:52 }}>
+      <p style={{ fontSize:"0.68rem", color:pal.accent, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>{tag}</p>
+      <h2
+        style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:pal.txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif", lineHeight:1.15, margin:0 }}
+        dangerouslySetInnerHTML={{ __html: title.replace(/<em>/g, `<em style="font-style:italic;color:${pal.accent}">`) }}
+      />
+    </div>
+  );
+}
+
+function CtaRow({ t, pal, isDark, waLink }: { t: typeof P.content.fr; pal: typeof P.palette; isDark: boolean; waLink: string }) {
+  return (
+    <div className="wk-cta-row" style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center", animation:"fadeUp .5s .32s ease both" }}>
+      <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+        style={{ background:pal.accent, color:isDark?"#04080F":"#FFFFFF", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"inline-flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
+        📅 {t.ctaPrimary}
+      </button>
+      <a href={waLink} target="_blank" rel="noopener noreferrer" className="wk-btn-wa"
+        style={{ background:"#25d366", color:"#FFFFFF", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"inline-flex", alignItems:"center", gap:8 }}>
+        💬 {t.ctaWhatsApp}
+      </a>
+      <button type="button" disabled className="wk-btn-demo" aria-disabled="true"
+        style={{ background:"transparent", color:pal.txt2, border:`1px solid ${pal.border}`, borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, display:"inline-flex", alignItems:"center", gap:10, fontFamily:"inherit", position:"relative" }}>
+        ✨ {t.ctaDemo}
+        <span style={{ fontSize:9, fontWeight:800, letterSpacing:1, padding:"2px 7px", borderRadius:100, border:`1px solid ${pal.accentBorder}`, color:pal.accent, background:pal.accentSoft, textTransform:"uppercase" }}>{t.ctaSoonBadge}</span>
+      </button>
     </div>
   );
 }
