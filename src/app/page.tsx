@@ -32,13 +32,13 @@ export default function DemoPage() {
   const [staticMode, setStaticMode] = useState(false);
 
   const t = lang === "fr" ? {
-    back: "Retour", title: "Démo", sub: PRODUCT + ", support client RAG (70% auto-resolution)",
-    desc: "Collez un ticket support client. L'agent RAG classifie, cherche dans la KB, propose une réponse, et decide si une escalade humaine est necessaire. Aucune connexion Zendesk/Intercom réelle, c'est un POC qui demontre la logique de production.",
-    inputLabel: "Ticket client", placeholder: "ex : 'Bonjour, je viens de recevoir ma facture et il y à un montant de 28 EUR que je ne comprends pas. Je suis sur le plan Pro a 19 EUR, d'ou vient ce montant additionnel ? Merci, Sarah.'",
-    generate: "Resoudre le ticket", generating: "Recherche KB + réponse...",
-    briefTitle: "Resolution proposee", emptyHint: "La classification et la réponse apparaîtront ici.",
+    back: "Retour", title: "Démo", sub: PRODUCT + ", support client RAG (70% auto-résolution)",
+    desc: "Collez un ticket support client. L'agent RAG classifie, cherche dans la KB, propose une réponse, et décide si une escalade humaine est nécessaire. Aucune connexion Zendesk/Intercom réelle, c'est un POC qui démontre la logique de production.",
+    inputLabel: "Ticket client", placeholder: "ex : 'Bonjour, je viens de recevoir ma facture et il y à un montant de 28 EUR que je ne comprends pas. Je suis sur le plan Pro a 19 EUR, d'où vient ce montant additionnel ? Merci, Sarah.'",
+    generate: "Résoudre le ticket", generating: "Recherche KB + réponse...",
+    briefTitle: "Résolution proposée", emptyHint: "La classification et la réponse apparaîtront ici.",
     sendReply: "Envoyer réponse au client", escalate: "Assigner à un agent humain", updateKb: "Mettre à jour la KB",
-    sentReplyMock: "Réponse envoyee au client via Zendesk (mode démo, pas d'envoi réel)",
+    sentReplyMock: "Réponse envoyée au client via Zendesk (mode démo, pas d'envoi réel)",
     escalateMock: "Ticket assigne à la queue Tier 2 (mode démo, pas de routing réel)",
     updateKbMock: "Article propose pour mise à jour KB (mode démo, pas de sync réelle Notion)",
     fallback: "Mode statique : la clé LLM sera ajoutée au prochain déploiement.",
